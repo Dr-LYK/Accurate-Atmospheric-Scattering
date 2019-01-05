@@ -19,15 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Atmosphere.cpp" />
+    <ClCompile Include="Error.cpp" />
+    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="ImGUI\imgui.cpp" />
     <ClCompile Include="ImGUI\imgui_demo.cpp" />
     <ClCompile Include="ImGUI\imgui_draw.cpp" />
     <ClCompile Include="ImGUI\imgui_impl_dx11.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Atmosphere.h" />
+    <ClInclude Include="AtmosphereDefinitions.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="Error.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="ImGUI\imconfig.h" />
     <ClInclude Include="ImGUI\imgui.h" />

@@ -4,7 +4,7 @@ struct ID3D11Device;
 struct ID3D11DeviceContext;
 namespace atmosphere { enum Luminance; }
 
-namespace gui
+namespace GUI
 {
 	typedef struct GuiData {
 		float view_zenith_angle_in_degrees = 84.2248f;

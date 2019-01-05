@@ -29,7 +29,7 @@
 typedef float scalar;
 typedef float3 scalar3;
 
-#include "..\atmosphere_definitions.h"
+#include "..\AtmosphereDefinitions.h"
 #include "atmosphere_model.hlsli"
 #include "atmosphere_functions.hlsli"
 

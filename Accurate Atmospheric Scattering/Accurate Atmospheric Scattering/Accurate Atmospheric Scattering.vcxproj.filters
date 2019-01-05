@@ -21,9 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ImGUI\imgui.cpp">
       <Filter>ImGUI</Filter>
     </ClCompile>
@@ -35,6 +32,24 @@
     </ClCompile>
     <ClCompile Include="ImGUI\imgui_impl_dx11.cpp">
       <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Error.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Atmosphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="ImGUI\stb_truetype.h">
       <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="AtmosphereDefinitions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Error.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

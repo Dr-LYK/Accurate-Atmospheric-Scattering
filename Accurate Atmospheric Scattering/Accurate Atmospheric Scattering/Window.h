@@ -1,6 +1,6 @@
 #pragma once
 
-namespace window
+namespace Window
 {
 	void init(HINSTANCE hInstance, uint32_t width, uint32_t height);
 	void get_client_size(uint32_t &width, uint32_t &height);

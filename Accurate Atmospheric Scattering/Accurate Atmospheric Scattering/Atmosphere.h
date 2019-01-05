@@ -58,9 +58,10 @@ struct ID3D11PixelShader;
 struct double3 { double x, y, z; };
 namespace renderer { struct Texture2D; struct Texture3D; }
 
-namespace atmosphere
+namespace Atmosphere
 {
-	enum Luminance {
+	enum Luminance
+	{
 		// Render the spectral radiance at kLambdaR, kLambdaG, kLambdaB.
 		NONE = 0,
 		// Render the sRGB luminance, using an approximate (on the fly) conversion
@@ -75,7 +76,8 @@ namespace atmosphere
 		PRECOMPUTED = 2
 	};
 
-	struct AtmosphereOptions {
+	struct AtmosphereOptions
+	{
 		Luminance use_luminance;
 		bool use_half_precision;
 		bool use_constant_solar_spectrum;
@@ -83,27 +85,19 @@ namespace atmosphere
 	};
 
 	void init();
-
 	void update();
-
 	void create_model(double3 lambdas);
 
 	AtmosphereOptions &get_options();
 
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> &get_demo_vs();
-
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> &get_demo_ps();
 
 	renderer::Texture2D &get_transmittance_texture();
-
 	renderer::Texture3D &get_scattering_texture();
-
 	renderer::Texture3D &get_single_mie_scattering_texture();
-
 	renderer::Texture2D &get_irradiance_texture();
 
 	void compute_white_point(double *p_white_point_r, double *p_white_point_g, double *p_white_point_b);
-
 	float compute_luminance_from_radiance_coeff(double lambda, double delta_lambda, int component);
-
 }
