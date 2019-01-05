@@ -30,3 +30,5 @@
 *.exe
 *.out
 *.app
+/.vs
+/Accurate Atmospheric Scattering/.vs/Accurate Atmospheric Scattering/v15
