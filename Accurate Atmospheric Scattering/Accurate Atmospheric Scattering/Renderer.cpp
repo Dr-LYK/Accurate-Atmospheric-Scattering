@@ -5,7 +5,7 @@
 #include <d3d11sdklayers.h>
 
 #include "Renderer.h"
-#include "GUI.h"
+#include "Store.h"
 #include "Window.h"
 #include "Atmosphere.h"
 #include "Error.h"
@@ -389,44 +389,22 @@ namespace Renderer
 				}
 			}
 		}
-	}
-
-	void set_view(GUI::GuiData& gui_data, float view_distance, float view_zenith_angle_in_radians, float view_azimuth_angle_in_radians, float sun_zenith_angle_in_radians, float sun_azimuth_angle_in_radians, float exposure) {
-		gui_data.view_distance = view_distance;
-		gui_data.view_zenith_angle_in_degrees = XMConvertToDegrees(view_zenith_angle_in_radians);
-		gui_data.view_azimuth_angle_in_degrees = XMConvertToDegrees(view_azimuth_angle_in_radians);
-		gui_data.sun_zenith_angle_in_degrees = XMConvertToDegrees(sun_zenith_angle_in_radians);
-		gui_data.sun_azimuth_angle_in_degrees = XMConvertToDegrees(sun_azimuth_angle_in_radians);
-		gui_data.exposure = exposure;
+		Store::Data& data = Store::get_data();
+		data.use_luminance = Atmosphere::Luminance::PRECOMPUTED;
 	}
 
 	void update()
 	{
-		GUI::GuiData& gui_data = GUI::get_data();
-		if (last_predefined_view_index != gui_data.predefined_view_index)
-		{
-			float exposure_luminance_factor = gui_data.use_luminance != Atmosphere::Luminance::NONE ? 1e-5f : 1.0f;
-			switch (gui_data.predefined_view_index) {
-			case 1: { set_view(gui_data, 9000.0f, 1.47f, 0.0f, 1.3f, 3.0f, 10.0f * exposure_luminance_factor); } break;
-			case 2: { set_view(gui_data, 9000.0f, 1.47f, 0.0f, 1.564f, -3.0f, 10.0f * exposure_luminance_factor); } break;
-			case 3: { set_view(gui_data, 7000.0f, 1.57f, 0.0f, 1.54f, -2.96f, 10.0f * exposure_luminance_factor); } break;
-			case 4: { set_view(gui_data, 7000.0f, 1.57f, 0.0f, 1.328f, -3.044f, 10.0f * exposure_luminance_factor); } break;
-			case 5: { set_view(gui_data, 9000.0f, 1.39f, 0.0f, 1.2f, 0.7f, 10.0f * exposure_luminance_factor); } break;
-			case 6: { set_view(gui_data, 9000.0f, 1.5f, 0.0f, 1.628f, 1.05f, 200.0f * exposure_luminance_factor); } break;
-			case 7: { set_view(gui_data, 7000.0f, 1.43f, 0.0f, 1.57f, 1.34f, 40.0f * exposure_luminance_factor); } break;
-			case 8: { set_view(gui_data, 2.7e6f, 0.81f, 0.0f, 1.57f, 2.0f, 10.0f * exposure_luminance_factor); } break;
-			case 9: { set_view(gui_data, 1.2e7f, 0.0f, 0.0f, 0.93f, -2.0f, 10.0f * exposure_luminance_factor); } break;
-			default: break;
-			}
-			last_predefined_view_index = gui_data.predefined_view_index;
-		}
+		Store::Data& data = Store::get_data();
+		if (data.use_luminance = Atmosphere::Luminance::PRECOMPUTED)
+			data.use_luminance = Atmosphere::Luminance::PRECOMPUTED;
 
 		{
 			float fov_y_angle_rad = XMConvertToRadians(fov_y_angle_deg);
 			float aspect_ratio = (float)backbuffer_width / backbuffer_height;
 			float scale_y = (float)(1.0 / tan(fov_y_angle_rad / 2.0));
 			float scale_x = scale_y / aspect_ratio;
-			XMFLOAT4X4 clip_from_view = { // left-handed reversed-z infinite projection
+			XMFLOAT4X4 clip_from_view = {
 				scale_x, 0.0, 0.0, 0.0,
 				0.0, scale_y, 0.0, 0.0,
 				0.0, 0.0, 0.0, near_plane,
@@ -436,39 +414,38 @@ namespace Renderer
 			XMMATRIX view_from_clip = XMMatrixInverse(nullptr, XMLoadFloat4x4(&clip_from_view));
 			XMStoreFloat4x4(&atmosphere_cb.data.view_from_clip, view_from_clip);
 
-			float cos_theta = (float)cos(XMConvertToRadians(gui_data.view_zenith_angle_in_degrees));
-			float sin_theta = (float)sin(XMConvertToRadians(gui_data.view_zenith_angle_in_degrees));
-			float cos_phi = (float)cos(XMConvertToRadians(gui_data.view_azimuth_angle_in_degrees));
-			float sin_phi = (float)sin(XMConvertToRadians(gui_data.view_azimuth_angle_in_degrees));
+			float cos_theta = (float)cos(XMConvertToRadians(data.view_zenith_angle_in_degrees));
+			float sin_theta = (float)sin(XMConvertToRadians(data.view_zenith_angle_in_degrees));
+			float cos_phi = (float)cos(XMConvertToRadians(data.view_azimuth_angle_in_degrees));
+			float sin_phi = (float)sin(XMConvertToRadians(data.view_azimuth_angle_in_degrees));
 
 			XMFLOAT3 view_x_ws = { -sin_phi, cos_phi, 0.f };
 			XMFLOAT3 view_y_ws = { -cos_theta * cos_phi, -cos_theta * sin_phi, sin_theta };
 			XMFLOAT3 view_z_ws = { -sin_theta * cos_phi, -sin_theta * sin_phi, -cos_theta };
 			XMFLOAT4X4 world_from_view = {
-				view_x_ws.x, view_y_ws.x, view_z_ws.x, -view_z_ws.x * gui_data.view_distance / 1000.f,
-				view_x_ws.y, view_y_ws.y, view_z_ws.y, -view_z_ws.y * gui_data.view_distance / 1000.f,
-				view_x_ws.z, view_y_ws.z, view_z_ws.z, -view_z_ws.z * gui_data.view_distance / 1000.f,
+				view_x_ws.x, view_y_ws.x, view_z_ws.x, -view_z_ws.x * data.view_distance / 1000.f,
+				view_x_ws.y, view_y_ws.y, view_z_ws.y, -view_z_ws.y * data.view_distance / 1000.f,
+				view_x_ws.z, view_y_ws.z, view_z_ws.z, -view_z_ws.z * data.view_distance / 1000.f,
 				0.0, 0.0, 0.0, 1.0
 			};
 			atmosphere_cb.data.world_from_view = world_from_view;
 
 			atmosphere_cb.data.view_pos_ws = { world_from_view(0,3),world_from_view(1,3),world_from_view(2,3) };
 			atmosphere_cb.data.earth_center_pos_ws = { 0.f,0.f, -6360.0 };
-			cos_theta = (float)cos(XMConvertToRadians(gui_data.sun_zenith_angle_in_degrees));
-			sin_theta = (float)sin(XMConvertToRadians(gui_data.sun_zenith_angle_in_degrees));
-			cos_phi = (float)cos(XMConvertToRadians(gui_data.sun_azimuth_angle_in_degrees));
-			sin_phi = (float)sin(XMConvertToRadians(gui_data.sun_azimuth_angle_in_degrees));
+			cos_theta = (float)cos(XMConvertToRadians(data.sun_zenith_angle_in_degrees));
+			sin_theta = (float)sin(XMConvertToRadians(data.sun_zenith_angle_in_degrees));
+			cos_phi = (float)cos(XMConvertToRadians(data.sun_azimuth_angle_in_degrees));
+			sin_phi = (float)sin(XMConvertToRadians(data.sun_azimuth_angle_in_degrees));
 			atmosphere_cb.data.sun_direction_ws = {
 				cos_phi * sin_theta,
 				sin_phi * sin_theta,
 				cos_theta
 			};
 
-			// White Balance
 			double white_point_r = 1.0;
 			double white_point_g = 1.0;
 			double white_point_b = 1.0;
-			if (gui_data.do_white_balance) {
+			if (data.do_white_balance) {
 				Atmosphere::compute_white_point(&white_point_r, &white_point_g, &white_point_b);
 			}
 			atmosphere_cb.data.white_point = { (float)white_point_r, (float)white_point_g , (float)white_point_b };
@@ -476,7 +453,7 @@ namespace Renderer
 			const double sun_angular_radius_rad = 0.00935 / 2.0;
 			atmosphere_cb.data.sun_disk_size_x = (float)tan(sun_angular_radius_rad);
 			atmosphere_cb.data.sun_disk_size_y = (float)cos(sun_angular_radius_rad);
-			atmosphere_cb.data.exposure = gui_data.exposure;
+			atmosphere_cb.data.exposure = data.exposure;
 			update_cb(atmosphere_cb.com_cb, &atmosphere_cb.data, sizeof(atmosphere_cb.data));
 		}
 	}
@@ -574,5 +551,29 @@ namespace Renderer
 	void present_frame()
 	{
 		com_swap_chain->Present(1, 0);
+	}
+
+	void update_sun()
+	{
+		Store::Data& data = Store::get_data();
+
+		if (data.sun_zenith_angle_in_degrees >= 360.0f)
+		{
+			data.sun_zenith_angle_in_degrees = 0;
+			data.day++;
+		}
+
+		if (data.sun_azimuth_angle_in_degrees >= 360.0f)
+		{
+			data.sun_azimuth_angle_in_degrees = 0;
+			data.day = 1;
+			data.year++;
+		}
+
+		if (data.sun_zenith_angle_in_degrees >= 110.0f && data.sun_zenith_angle_in_degrees <= 250.0f)
+			data.sun_zenith_angle_in_degrees = 250;
+
+		data.sun_zenith_angle_in_degrees += 0.1f;
+		data.sun_azimuth_angle_in_degrees += 0.1f * (1.0f/365.0f);
 	}
 }

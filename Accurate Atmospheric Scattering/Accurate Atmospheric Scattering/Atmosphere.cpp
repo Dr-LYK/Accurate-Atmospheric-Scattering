@@ -37,7 +37,7 @@
 #include <cstring>
 
 #include "Atmosphere.h"
-#include "GUI.h" 
+#include "Store.h" 
 #include "Renderer.h"
 #include "Error.h"
 
@@ -793,17 +793,17 @@ namespace Atmosphere
 	}
 
 	void init() {
-		GUI::GuiData &gui_data = GUI::get_data();
+		Store::Data &data = Store::get_data();
 
 		atmosphere_options.use_luminance = Luminance::NONE;
 		atmosphere_options.use_half_precision = false;
 		atmosphere_options.use_ozone_layer = true;
 		atmosphere_options.use_constant_solar_spectrum = false;
 
-		gui_data.use_luminance = atmosphere_options.use_luminance;
-		gui_data.use_ozone_layer = atmosphere_options.use_ozone_layer;
-		gui_data.use_constant_solar_spectrum = atmosphere_options.use_constant_solar_spectrum;
-		gui_data.use_half_precision = atmosphere_options.use_half_precision;
+		data.use_luminance = atmosphere_options.use_luminance;
+		data.use_ozone_layer = atmosphere_options.use_ozone_layer;
+		data.use_constant_solar_spectrum = atmosphere_options.use_constant_solar_spectrum;
+		data.use_half_precision = atmosphere_options.use_half_precision;
 
 		XMMATRIX identity = XMMatrixIdentity();
 		XMStoreFloat4x4(&precompute_cb.data.luminance_from_radiance, identity);
@@ -823,27 +823,27 @@ namespace Atmosphere
 	}
 
 	void update() {
-		GUI::GuiData& gui_data = GUI::get_data();
+		Store::Data& data = Store::get_data();
 		bool need_to_update_atmosphere_model = false;
 
-		if (atmosphere_options.use_half_precision != gui_data.use_half_precision) {
-			atmosphere_options.use_half_precision = gui_data.use_half_precision;
+		if (atmosphere_options.use_half_precision != data.use_half_precision) {
+			atmosphere_options.use_half_precision = data.use_half_precision;
 			create_textures(atmosphere_options.use_half_precision);
 			need_to_update_atmosphere_model = true;
 		}
 
-		if (atmosphere_options.use_constant_solar_spectrum != gui_data.use_constant_solar_spectrum || atmosphere_options.use_ozone_layer != gui_data.use_ozone_layer) {
-			atmosphere_options.use_constant_solar_spectrum = gui_data.use_constant_solar_spectrum;
-			atmosphere_options.use_ozone_layer = gui_data.use_ozone_layer;
+		if (atmosphere_options.use_constant_solar_spectrum != data.use_constant_solar_spectrum || atmosphere_options.use_ozone_layer != data.use_ozone_layer) {
+			atmosphere_options.use_constant_solar_spectrum = data.use_constant_solar_spectrum;
+			atmosphere_options.use_ozone_layer = data.use_ozone_layer;
 			need_to_update_atmosphere_model = true;
 		}
 
-		if (atmosphere_options.use_luminance != gui_data.use_luminance) {
+		if (atmosphere_options.use_luminance != data.use_luminance) {
 			if (atmosphere_options.use_luminance == Luminance::NONE) {
-				gui_data.exposure *= 1e-5f;
+				data.exposure *= 1e-5f;
 			};
-			if (gui_data.use_luminance == Luminance::NONE) { gui_data.exposure /= 1e-5f; };
-			atmosphere_options.use_luminance = gui_data.use_luminance;
+			if (data.use_luminance == Luminance::NONE) { data.exposure /= 1e-5f; };
+			atmosphere_options.use_luminance = data.use_luminance;
 			need_to_update_atmosphere_model = true;
 		}
 

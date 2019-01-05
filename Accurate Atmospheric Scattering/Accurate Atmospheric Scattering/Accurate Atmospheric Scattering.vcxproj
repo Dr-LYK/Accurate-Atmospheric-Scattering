@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Atmosphere.cpp" />
     <ClCompile Include="Error.cpp" />
-    <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="Store.cpp" />
     <ClCompile Include="ImGUI\imgui.cpp" />
     <ClCompile Include="ImGUI\imgui_demo.cpp" />
     <ClCompile Include="ImGUI\imgui_draw.cpp" />
@@ -35,7 +35,7 @@
     <ClInclude Include="AtmosphereDefinitions.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Error.h" />
-    <ClInclude Include="GUI.h" />
+    <ClInclude Include="Store.h" />
     <ClInclude Include="ImGUI\imconfig.h" />
     <ClInclude Include="ImGUI\imgui.h" />
     <ClInclude Include="ImGUI\imgui_impl_dx11.h" />

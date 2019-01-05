@@ -1,6 +1,9 @@
 #include "Common.h"
 
-#include "GUI.h"
+#include <thread>
+#include <chrono>
+
+#include "Store.h"
 #include "Window.h"
 #include "Renderer.h"
 #include "Atmosphere.h"
@@ -10,20 +13,42 @@
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
-void update() {
-	GUI::update();
+bool clear = false;
+
+void update()
+{
+	Store::update();
 	Atmosphere::update();
 	Renderer::update();
 }
 
-void render() {
+void render()
+{
 	Renderer::render_frame();
-	GUI::render_frame();
+	Store::render_frame();
 	Renderer::present_frame();
 }
 
-void clean_up() {
-	GUI::clean_up();
+void clean_up()
+{
+	clear = true;
+	Store::clean_up();
+}
+
+void timer_init()
+{
+	clear = false;
+	std::thread t([=]()
+	{
+		while (true)
+		{
+			if (clear) return;
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			if (clear) return;
+			Renderer::update_sun();
+		}
+	});
+	t.detach();
 }
 
 int WINAPI wWinMain(
@@ -34,19 +59,17 @@ int WINAPI wWinMain(
 {
 	Window::init(hInstance, 960, 540);
 	Renderer::init();
-	GUI::init();
+	Store::init();
 	Atmosphere::init();
+	timer_init();
 
 	MSG msg = { 0 };
-	while (msg.message != WM_QUIT)
-	{
-		if (PeekMessageA(&msg, 0, 0, 0, PM_REMOVE))
-		{
+	while (msg.message != WM_QUIT) {
+		if (PeekMessageA(&msg, 0, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessageA(&msg);
 		}
-		else
-		{
+		else {
 			update();
 			render();
 		}

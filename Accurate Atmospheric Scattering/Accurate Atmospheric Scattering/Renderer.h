@@ -39,4 +39,5 @@ namespace Renderer
 	void compile_and_create_shader(Microsoft::WRL::ComPtr<ID3D11GeometryShader>& com_gs, const wchar_t* p_name);
 	bool check_full_precision_rgb_support();
 
+	void update_sun();
 }
