@@ -26,20 +26,20 @@
 * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 * THE POSSIBILITY OF SUCH DAMAGE.
 */
-#include "common.h"
 
-#include <dxgi1_6.h>
-#include <d3dcompiler.h>
-#include <d3d11sdklayers.h>
 
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <dxgi1_6.h>
+#include <d3dcompiler.h>
+#include <d3d11sdklayers.h>
 
 #include "Atmosphere.h"
+#include "Common.h"
+#include "Error.h"
 #include "GUI.h" 
 #include "Renderer.h"
-#include "Error.h"
 
 typedef double scalar;
 typedef double3 scalar3;
@@ -315,17 +315,17 @@ namespace Atmosphere
 	ComPtr<ID3D11PixelShader> a_com_precompute_shaders[num_precompute_shader_type] = { nullptr };
 	ComPtr<ID3D11GeometryShader> com_precompute_gs = nullptr;
 
-	renderer::Texture2D transmittance_texture;
-	renderer::Texture2D irradiance_texture;
-	renderer::Texture2D delta_irradiance_texture;
-	renderer::Texture3D scattering_texture;
-	renderer::Texture3D single_mie_scattering_texture;
-	renderer::Texture3D delta_rayleigh_scattering_texture;
-	renderer::Texture3D delta_mie_scattering_texture;
-	renderer::Texture3D delta_scattering_density_texture;
+	Renderer::Texture2D transmittance_texture;
+	Renderer::Texture2D irradiance_texture;
+	Renderer::Texture2D delta_irradiance_texture;
+	Renderer::Texture3D scattering_texture;
+	Renderer::Texture3D single_mie_scattering_texture;
+	Renderer::Texture3D delta_rayleigh_scattering_texture;
+	Renderer::Texture3D delta_mie_scattering_texture;
+	Renderer::Texture3D delta_scattering_density_texture;
 
-	renderer::Texture2D test_irradiance_texture;
-	renderer::Texture2D test_delta_irradiance_texture;
+	Renderer::Texture2D test_irradiance_texture;
+	Renderer::Texture2D test_delta_irradiance_texture;
 
 	double a_wavelengths[num_lambda_slices];
 	double a_solar_irradiance_coeffs[num_lambda_slices];
@@ -362,19 +362,19 @@ namespace Atmosphere
 		return com_demo_ps;
 	}
 
-	renderer::Texture2D& get_transmittance_texture() {
+	Renderer::Texture2D& get_transmittance_texture() {
 		return transmittance_texture;
 	}
 
-	renderer::Texture3D & get_scattering_texture() {
+	Renderer::Texture3D & get_scattering_texture() {
 		return scattering_texture;
 	}
 
-	renderer::Texture3D & get_single_mie_scattering_texture() {
+	Renderer::Texture3D & get_single_mie_scattering_texture() {
 		return single_mie_scattering_texture;
 	}
 
-	renderer::Texture2D & get_irradiance_texture() {
+	Renderer::Texture2D & get_irradiance_texture() {
 		return irradiance_texture;
 	}
 
@@ -793,7 +793,7 @@ namespace Atmosphere
 	}
 
 	void init() {
-		gui::GuiData &gui_data = gui::get_data();
+		GUI::GuiData &gui_data = GUI::get_data();
 
 		atmosphere_options.use_luminance = Luminance::NONE;
 		atmosphere_options.use_half_precision = false;
@@ -823,7 +823,7 @@ namespace Atmosphere
 	}
 
 	void update() {
-		gui::GuiData& gui_data = gui::get_data();
+		GUI::GuiData& gui_data = GUI::get_data();
 		bool need_to_update_atmosphere_model = false;
 
 		if (atmosphere_options.use_half_precision != gui_data.use_half_precision) {
@@ -848,7 +848,7 @@ namespace Atmosphere
 		}
 
 		if (need_to_update_atmosphere_model) {
-			if (atmosphere_options.use_luminance != atmosphere::Luminance::PRECOMPUTED) {
+			if (atmosphere_options.use_luminance != Atmosphere::Luminance::PRECOMPUTED) {
 				double3 lambdas = { kLambdaR , kLambdaG, kLambdaB };
 				create_model(lambdas);
 				create_demo_pixel_shader();

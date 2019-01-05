@@ -56,7 +56,7 @@ constexpr double kLengthUnitInMeters = 1000.0;
 struct ID3D11VertexShader;
 struct ID3D11PixelShader;
 struct double3 { double x, y, z; };
-namespace renderer { struct Texture2D; struct Texture3D; }
+namespace Renderer { struct Texture2D; struct Texture3D; }
 
 namespace Atmosphere
 {
@@ -93,10 +93,10 @@ namespace Atmosphere
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> &get_demo_vs();
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> &get_demo_ps();
 
-	renderer::Texture2D &get_transmittance_texture();
-	renderer::Texture3D &get_scattering_texture();
-	renderer::Texture3D &get_single_mie_scattering_texture();
-	renderer::Texture2D &get_irradiance_texture();
+	Renderer::Texture2D &get_transmittance_texture();
+	Renderer::Texture3D &get_scattering_texture();
+	Renderer::Texture3D &get_single_mie_scattering_texture();
+	Renderer::Texture2D &get_irradiance_texture();
 
 	void compute_white_point(double *p_white_point_r, double *p_white_point_g, double *p_white_point_b);
 	float compute_luminance_from_radiance_coeff(double lambda, double delta_lambda, int component);

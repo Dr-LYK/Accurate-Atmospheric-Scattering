@@ -2,7 +2,7 @@
 
 struct ID3D11Device;
 struct ID3D11DeviceContext;
-namespace atmosphere { enum Luminance; }
+namespace Atmosphere { enum Luminance; }
 
 namespace GUI
 {
@@ -16,7 +16,7 @@ namespace GUI
 		int predefined_view_index = 0;
 		bool do_white_balance = true;
 
-		atmosphere::Luminance use_luminance;
+		Atmosphere::Luminance use_luminance;
 		bool use_ozone_layer = true;
 		bool use_constant_solar_spectrum = false;
 		bool use_half_precision = false;

@@ -404,7 +404,7 @@ namespace Renderer
 		GUI::GuiData& gui_data = GUI::get_data();
 		if (last_predefined_view_index != gui_data.predefined_view_index)
 		{
-			float exposure_luminance_factor = gui_data.use_luminance != atmosphere::Luminance::NONE ? 1e-5f : 1.0f;
+			float exposure_luminance_factor = gui_data.use_luminance != Atmosphere::Luminance::NONE ? 1e-5f : 1.0f;
 			switch (gui_data.predefined_view_index) {
 			case 1: { set_view(gui_data, 9000.0f, 1.47f, 0.0f, 1.3f, 3.0f, 10.0f * exposure_luminance_factor); } break;
 			case 2: { set_view(gui_data, 9000.0f, 1.47f, 0.0f, 1.564f, -3.0f, 10.0f * exposure_luminance_factor); } break;
