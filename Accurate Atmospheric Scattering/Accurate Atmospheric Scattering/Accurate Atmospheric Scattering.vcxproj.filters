@@ -16,6 +16,9 @@
     <Filter Include="ImGUI">
       <UniqueIdentifier>{276a26c0-edf5-47a0-be1c-d7554916a525}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{20fdb9e5-bd77-4a43-a454-ef9b1c8e7433}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -71,5 +74,30 @@
     <ClInclude Include="ImGUI\stb_truetype.h">
       <Filter>ImGUI</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\atmosphere_demo_ps.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\atmosphere_demo_vs.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\atmosphere_precompute_gs.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\atmosphere_precompute_ps.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\atmosphere_precompute_vs.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\atmosphere_functions.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\atmosphere_model.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

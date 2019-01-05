@@ -39,6 +39,17 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\atmosphere_demo_ps.hlsl" />
+    <FxCompile Include="Shaders\atmosphere_demo_vs.hlsl" />
+    <FxCompile Include="Shaders\atmosphere_precompute_gs.hlsl" />
+    <FxCompile Include="Shaders\atmosphere_precompute_ps.hlsl" />
+    <FxCompile Include="Shaders\atmosphere_precompute_vs.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\atmosphere_functions.hlsli" />
+    <None Include="Shaders\atmosphere_model.hlsli" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D01FACD9-ADF0-4B67-B321-1A3D1E211C07}</ProjectGuid>
