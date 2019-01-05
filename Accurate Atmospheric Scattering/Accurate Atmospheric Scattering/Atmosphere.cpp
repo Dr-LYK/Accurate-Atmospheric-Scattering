@@ -26,20 +26,20 @@
 * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 * THE POSSIBILITY OF SUCH DAMAGE.
 */
+#include "Common.h"
 
-
-#include <cmath>
-#include <cstdio>
-#include <cstring>
 #include <dxgi1_6.h>
 #include <d3dcompiler.h>
 #include <d3d11sdklayers.h>
 
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+
 #include "Atmosphere.h"
-#include "Common.h"
-#include "Error.h"
 #include "GUI.h" 
 #include "Renderer.h"
+#include "Error.h"
 
 typedef double scalar;
 typedef double3 scalar3;

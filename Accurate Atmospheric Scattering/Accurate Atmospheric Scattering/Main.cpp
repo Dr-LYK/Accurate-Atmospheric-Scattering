@@ -1,8 +1,9 @@
-#include "Atmosphere.h"
 #include "Common.h"
+
 #include "GUI.h"
-#include "Renderer.h"
 #include "Window.h"
+#include "Renderer.h"
+#include "Atmosphere.h"
 
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3d11.lib")

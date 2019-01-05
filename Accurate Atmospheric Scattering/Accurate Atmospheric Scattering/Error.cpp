@@ -1,6 +1,7 @@
+#include "Common.h"
+
 #include <winerror.h>
-#include "common.h"
-#include "error.h"
+#include "Error.h"
 
 void error(const char *p_func_name, const char *p_message)
 {

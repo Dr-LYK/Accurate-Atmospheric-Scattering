@@ -1,10 +1,12 @@
-#include "Atmosphere.h"
 #include "Common.h"
-#include "GUI.h"
+
 #include "ImGUI/imgui.h"
 #include "ImGUI/imgui_impl_dx11.h"
-#include "Renderer.h"
+
+#include "GUI.h"
 #include "Window.h"
+#include "Renderer.h"
+#include "Atmosphere.h"
 
 namespace GUI
 {

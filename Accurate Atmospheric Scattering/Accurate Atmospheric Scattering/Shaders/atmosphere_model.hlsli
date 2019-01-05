@@ -6,7 +6,7 @@ static const int SCATTERING_TEXTURE_MU_S_SIZE = 32;
 static const int SCATTERING_TEXTURE_NU_SIZE = 8;
 static const int IRRADIANCE_TEXTURE_WIDTH = 64;
 static const int IRRADIANCE_TEXTURE_HEIGHT = 16;
-static const float3 SKY_SPECTRAL_RADIANCE_TO_LUMINANCE = float3(683.000000, 683.000000, 683.000000);
+static const float3 SKY_SPECTRAL_RADIANCE_TO_LUMINANCE = float3(114974.916437, 71305.954816, 65310.548555);
 static const float3 SUN_SPECTRAL_RADIANCE_TO_LUMINANCE = float3(98242.786222, 69954.398112, 66475.012354);
 static const float kLengthUnitInMeters = 1000.000000;
 
@@ -27,4 +27,3 @@ static const AtmosphereParameters atmosphere = {
 	-0.500000
 };
 
-#define USE_LUMINANCE

@@ -1,4 +1,5 @@
 #include "Common.h"
+
 #include "Window.h"
 #include "Renderer.h"
 #include "GUI.h"
@@ -11,7 +12,7 @@ namespace Window
 	static int window_width;
 	static int window_height;
 	static const char *p_window_class_name = "Accurate Atmospheric Scattering Window Class";
-	static const char *p_window_name = "Accurate Atmospheric Scaterring";
+	static const char *p_window_name = "Accurate Atmospheric Scaterring - EPITA - MTI 2019";
 	HWND h_window = NULL;
 
 	LRESULT CALLBACK window_proc(HWND h_window, UINT msg, WPARAM w_param, LPARAM l_param)

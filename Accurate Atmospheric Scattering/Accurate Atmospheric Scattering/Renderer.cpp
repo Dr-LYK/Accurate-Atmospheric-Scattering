@@ -1,13 +1,14 @@
+#include "Common.h"
+
+#include <dxgi1_5.h>
 #include <d3dcompiler.h>
 #include <d3d11sdklayers.h>
-#include <dxgi1_5.h>
 
-#include "Atmosphere.h"
-#include "Common.h"
-#include "Error.h"
-#include "GUI.h"
 #include "Renderer.h"
+#include "GUI.h"
 #include "Window.h"
+#include "Atmosphere.h"
+#include "Error.h"
 
 #define MAX_NUM_DXGI_ADAPTERS 8
 #define _D3D_SET_DEBUG_NAME(A,B)	((A)->SetPrivateData(WKPDID_D3DDebugObjectName, sizeof((B)), (B)))
